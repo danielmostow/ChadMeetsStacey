@@ -29,6 +29,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.firebase.auth.ActionCodeSettings;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,7 +85,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
+        Button mEmailSignInButton = (Button) findViewById(R.id.login_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,6 +103,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    private void sendVerEmail(){
+        ActionCodeSettings actionCodeSettings = ActionCodeSettings.newBuilder().setUrl("https://www.example.com/finishSignUp?cartId=1234")
+                // This must be true
+                .setHandleCodeInApp(true)
+                .setAndroidPackageName(
+                        "com.example.android",
+                        true, /* installIfNotAvailable */
+                        "12"    /* minimumVersion */)
+                .build();
     }
 
     private boolean mayRequestContacts() {
@@ -345,6 +359,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+
     }
 }
 
