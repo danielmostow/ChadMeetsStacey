@@ -20,6 +20,15 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login:"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textStyle="bold|italic" />
+
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
@@ -65,13 +74,40 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/email_sign_in_button"
+                android:id="@+id/login_button"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="79dp"
                 android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
+                android:text="Login"
                 android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/forgot_password_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="79dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="0.5"
+                    android:text="Forgot Password"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/new_user_button"
+                    style="?android:textAppearanceSmall"
+                    android:layout_width="0dp"
+                    android:layout_height="79dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="0.5"
+                    android:text="New User"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
