@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".FindADateMode"
+            android:name=".FindADateModeActivity"
             android:label="@string/title_activity_find_adate_mode"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

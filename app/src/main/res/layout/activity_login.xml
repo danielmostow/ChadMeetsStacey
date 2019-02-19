@@ -67,10 +67,10 @@
                     android:imeActionId="6"
                     android:imeActionLabel="@string/action_sign_in_short"
                     android:imeOptions="actionUnspecified"
+                    android:importantForAutofill="no"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true"
-                    android:importantForAutofill="no" />
+                    android:singleLine="true" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -79,7 +79,7 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="79dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="50dp"
                 android:text="@string/login"
                 android:textStyle="bold" />
 
@@ -95,6 +95,7 @@
                     android:layout_height="79dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="0.5"
+                    android:onClick="getToFindADateMode"
                     android:text="@string/forgot_password"
                     android:textStyle="bold" />
 

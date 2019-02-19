@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                auth.createUserWithEmailAndPassword(email,password)
+                /*auth.createUserWithEmailAndPassword(email,password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -126,11 +126,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 finish();
                             }
                         });
+                */
 
             }
         });
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+    }
+
+    public void getToFindADateMode(View view) {
+        //TODO: remove from Forgot Password button, only used for testing currently
+        Intent intent = new Intent(this, FindADateModeActivity.class);
+        startActivity(intent);
     }
 
     private void populateAutoComplete() {

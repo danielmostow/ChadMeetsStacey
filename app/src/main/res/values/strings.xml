@@ -16,6 +16,12 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <!-- Strings related to find a date mode -->
     <string name="title_activity_find_adate_mode">FindADateMode</string>
+    <string name="swipe_mode">Swipe Mode</string>
+    <string name="create_event">Create Event</string>
+    <string name="my_ongoing_events">My Ongoing Events:</string>
+
+
     <string name="action_settings">Settings</string>
 </resources>
