@@ -9,7 +9,13 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="login">Login</string>
+    <string name="login_text">Login:</string>
+    <string name="new_user">New User</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_find_adate_mode">FindADateMode</string>
+    <string name="action_settings">Settings</string>
 </resources>

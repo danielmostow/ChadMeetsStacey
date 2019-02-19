@@ -24,7 +24,7 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login:"
+        android:text="@string/login_text"
         android:textAlignment="center"
         android:textSize="36sp"
         android:textStyle="bold|italic" />
@@ -69,7 +69,8 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:importantForAutofill="no" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -79,7 +80,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="79dp"
                 android:layout_marginTop="16dp"
-                android:text="Login"
+                android:text="@string/login"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -94,7 +95,7 @@
                     android:layout_height="79dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="0.5"
-                    android:text="Forgot Password"
+                    android:text="@string/forgot_password"
                     android:textStyle="bold" />
 
                 <Button
@@ -104,7 +105,7 @@
                     android:layout_height="79dp"
                     android:layout_marginTop="16dp"
                     android:layout_weight="0.5"
-                    android:text="New User"
+                    android:text="@string/new_user"
                     android:textStyle="bold" />
 
             </LinearLayout>
