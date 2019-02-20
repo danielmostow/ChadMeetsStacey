@@ -65,9 +65,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     private UserLoginTask mAuthTask = null;
     private FirebaseAuth auth;
-
+    private boolean signInSuccess;
     // UI references.
     private AutoCompleteTextView mEmailView;
+    private EditText emailError;
     private EditText mPasswordView, inputEmail, inputPassword;
     private View mProgressView;
     private View mLoginFormView;
@@ -79,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         auth = FirebaseAuth.getInstance();
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        emailError = findViewById(R.id.email);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -118,15 +120,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                /*auth.createUserWithEmailAndPassword(email,password)
+                auth.createUserWithEmailAndPassword(email,password)
                         .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 Toast.makeText(LoginActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                auth.getCurrentUser().sendEmailVerification();
                                 finish();
                             }
                         });
-                */
+
 
             }
         });
@@ -148,16 +151,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getLoaderManager().initLoader(0, null, this);
     }
 
-    private void sendVerEmail(){
-        ActionCodeSettings actionCodeSettings = ActionCodeSettings.newBuilder().setUrl("https://www.example.com/finishSignUp?cartId=1234")
-                // This must be true
-                .setHandleCodeInApp(true)
-                .setAndroidPackageName(
-                        "com.example.android",
-                        true, /* installIfNotAvailable */
-                        "12"    /* minimumVersion */)
-                .build();
-    }
 
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -210,12 +203,36 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+       final String email = mEmailView.getText().toString();
+       final String password = mPasswordView.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
 
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            if(auth.getCurrentUser().isEmailVerified())
+                            {
+
+                                // Show a progress spinner, and kick off a background task to
+                                // perform the user login attempt.
+                                showProgress(true);
+                                mAuthTask = new UserLoginTask(email, password);
+                                mAuthTask.execute((Void) null);
+                            }
+                            else
+                            {
+                                emailError.setError("Your email has not been verified");
+                            }
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            emailError.setError("Could not authenticate Email or Password");
+                        }
+
+                    }
+                });
+/*
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
@@ -233,7 +250,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mEmailView;
             cancel = true;
         }
-
+        if(!signInSuccess)
+        {
+            mEmailView.setError("Your email is not yet verified");
+            focusView = mEmailView;
+            cancel = true;
+        }
         if (cancel) {
             // There was an error; don't attempt login and focus the first
             // form field with an error.
@@ -244,12 +266,37 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-        }
+        }*/
     }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
         return email.contains("@");
+    }
+
+    private void isEmailInDatabase(String email, String password)
+    {
+        auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            if(auth.getCurrentUser().isEmailVerified())
+                            {
+                                signInSuccess = true;
+                                return;
+                            }
+                            else
+                                signInSuccess = false;
+                            return;
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            signInSuccess = false;
+                            return;
+                        }
+
+                    }
+                });
     }
 
     private boolean isPasswordValid(String password) {
