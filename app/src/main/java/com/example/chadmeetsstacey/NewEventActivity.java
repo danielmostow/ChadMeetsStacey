@@ -26,6 +26,8 @@ public class NewEventActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate() method called!");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_event);
 
@@ -51,7 +53,7 @@ public class NewEventActivity extends AppCompatActivity {
 
                 // Get user information for log
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Log.d(TAG, user.getUid());
+                Log.d(TAG, user.getEmail());
 
                 // Create new event and add to event collection
                 UserEvent event = new UserEvent(eventName.getText().toString(),
