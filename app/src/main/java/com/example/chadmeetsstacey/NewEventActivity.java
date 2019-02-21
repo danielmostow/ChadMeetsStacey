@@ -23,6 +23,8 @@ import java.util.HashMap;
 
 public class NewEventActivity extends AppCompatActivity {
 
+    private static final String TAG = "NewEventActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,13 +65,13 @@ public class NewEventActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
-                                //Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                //Log.w(TAG, "Error adding document", e);
+                                Log.w(TAG, "Error adding document", e);
                             }
                         });
                 finish();
