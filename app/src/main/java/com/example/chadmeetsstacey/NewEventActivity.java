@@ -15,11 +15,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Map;
-import java.util.HashMap;
 
 public class NewEventActivity extends AppCompatActivity {
 
@@ -50,15 +49,14 @@ public class NewEventActivity extends AppCompatActivity {
                 EditText location = (EditText) findViewById(R.id.location_text);
                 EditText description = (EditText) findViewById(R.id.description_text);
 
+                // Get user information for log
+                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                Log.d(TAG, user.getUid());
+
                 // Create new event and add to event collection
-                //TODO: Need to add user info (user ID, greek org, etc.)
-                //TODO: Create class to hold event info
-                Map<String, Object> event = new HashMap<>();
-                event.put("event_name", eventName.getText().toString());
-                event.put("date", date.getText().toString());
-                event.put("time", time.getText().toString());
-                event.put("location", location.getText().toString());
-                event.put("description", description.getText().toString());
+                UserEvent event = new UserEvent(eventName.getText().toString(),
+                        date.getText().toString(), time.getText().toString(),
+                        description.getText().toString(), location.getText().toString());
 
                 db.collection("events")
                         .add(event)
