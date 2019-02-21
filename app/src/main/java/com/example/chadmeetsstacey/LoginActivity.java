@@ -206,7 +206,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
        final String email = mEmailView.getText().toString();
        final String password = mPasswordView.getText().toString();
 
-
+        if(TextUtils.isEmpty(password) ||TextUtils.isEmpty(email))
+        {
+            emailError.setError("Please input both an email and a password");
+            return;
+        }
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -226,49 +230,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             else
                             {
                                 emailError.setError("Your email has not been verified");
+                                return;
                             }
                         } else {
                             // If sign in fails, display a message to the user.
                             emailError.setError("Could not authenticate Email or Password");
+                            return;
                         }
-
                     }
                 });
-/*
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
-        if(!signInSuccess)
-        {
-            mEmailView.setError("Your email is not yet verified");
-            focusView = mEmailView;
-            cancel = true;
-        }
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
-        }*/
     }
 
     private boolean isEmailValid(String email) {
