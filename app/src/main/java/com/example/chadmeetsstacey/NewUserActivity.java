@@ -85,10 +85,12 @@ public class NewUserActivity extends AppCompatActivity {
                                         finish();
                                     } else {
                                         Log.d(TAG, "User has already been created previously");
-                                        Toast.makeText(NewUserActivity.this, "User has already been created previously", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(NewUserActivity.this, "User has already been created previously!", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
+                } else {
+                    Toast.makeText(NewUserActivity.this, "Passwords do not match!", Toast.LENGTH_LONG).show();
                 }
             }
         });
