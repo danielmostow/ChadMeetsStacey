@@ -57,6 +57,24 @@ public class FindADateModeActivity extends AppCompatActivity {
         GetUserEvents();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause() method called!");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop() method called!");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "onDestroy() method called!");
+    }
+
     // Takes user to create event screen
     public void createEvent(View view) {
         Intent intent = new Intent(this, NewEventActivity.class);
@@ -93,7 +111,6 @@ public class FindADateModeActivity extends AppCompatActivity {
 
                         // Create text to go in card
                         TextView text = new TextView(context);
-
                         int numMatchObjects = ((List<String>) document.get("potentialMatches")).size();
                         text.setText(document.get("eventName") + "\n"+ numMatchObjects + " matches");
                         text.setMaxLines(2);
