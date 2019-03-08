@@ -142,7 +142,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Intent intent = new Intent(this, FindADateModeActivity.class);
         startActivity(intent);
     }
-
+    public void getToForgotPasswordMode(View view) {
+        //TODO: remove from Forgot Password button, only used for testing currently
+        Intent intent = new Intent(this, ForgotPasswordActivity.class);
+        startActivity(intent);
+    }
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -239,41 +243,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         }
                     }
                 });
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return email.contains("@");
-    }
-
-    private void isEmailInDatabase(String email, String password)
-    {
-        auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            if(auth.getCurrentUser().isEmailVerified())
-                            {
-                                signInSuccess = true;
-                                return;
-                            }
-                            else
-                                signInSuccess = false;
-                            return;
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            signInSuccess = false;
-                            return;
-                        }
-
-                    }
-                });
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return password.length() > 4;
     }
 
     /**
