@@ -3,6 +3,7 @@ package com.example.chadmeetsstacey;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -112,13 +113,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 attemptLogin();
             }
         });
+        // Used for intent to new user activity
+        final Context context = this;
         Button newUserButton = (Button) findViewById(R.id.new_user_button);
         newUserButton.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                final String email = inputEmail.getText().toString().trim();
+                /*final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 if (TextUtils.isEmpty(email)) {
                     Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
@@ -152,11 +155,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                 Log.w(TAG, "Error adding document", e);
                                             }
                                         });
-                                finish();
+                                //finish();
                             }
                         });
-
-
+                */
+                // Start new user activity
+                Intent intent = new Intent(context, NewUserActivity.class);
+                startActivity(intent);
             }
         });
         mLoginFormView = findViewById(R.id.login_form);

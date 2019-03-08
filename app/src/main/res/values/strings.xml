@@ -32,6 +32,17 @@
     <string name="description">Description:</string>
     <string name="submit_button">Submit</string>
 
+    <!-- Strings related to new user -->
+    <string name="title_activity_new_user">NewUserActivity</string>
+    <string name="new_user_heading">New User:</string>
+    <string name="email">Email:</string>
+    <string name="password">Password:</string>
+    <string name="confirm_password">Confirm Password:</string>
+    <string name="first_name">First Name:</string>
+    <string name="age">Age:</string>
+    <string name="grade">Grade:</string>
+    <string name="greek_org">Greek Organization:</string>
+    <string name="register_button">Register:</string>
 
     <string name="action_settings">Settings</string>
 </resources>

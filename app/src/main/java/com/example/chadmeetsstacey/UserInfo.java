@@ -3,7 +3,7 @@ package com.example.chadmeetsstacey;
 public class UserInfo {
     // Instance variables
     private String emailAddress;
-    private String name;
+    private String firstName;
     private String greekOrg;
     private int age;
     private String grade;
@@ -15,9 +15,12 @@ public class UserInfo {
         // Need for Firebase purposes
     }
 
-    public UserInfo(String emailAddress) {
+    public UserInfo(String emailAddress, String firstName, String greekOrg, int age, String grade) {
         this.emailAddress = emailAddress;
-        // TODO: Add initialization for other fields as they are added
+        this.firstName = firstName;
+        this.greekOrg = greekOrg;
+        this.age = age;
+        this.grade = grade;
     }
 
     // Getter methods
@@ -26,8 +29,8 @@ public class UserInfo {
         return emailAddress;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     public String getGreekOrg() {
