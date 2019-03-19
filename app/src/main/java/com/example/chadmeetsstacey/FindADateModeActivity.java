@@ -3,20 +3,20 @@ package com.example.chadmeetsstacey;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.LinearLayout.LayoutParams;
 
@@ -99,7 +99,7 @@ public class FindADateModeActivity extends AppCompatActivity {
                     int prevCardViewId = 0;
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
-                        // Create card with text view for each of user's events
+                        // Create card with text view and edit button for each of user's events
                         CardView card = new CardView(context);
                         int curCardViewId = prevCardViewId + 1;
                         card.setId(curCardViewId);
@@ -120,8 +120,29 @@ public class FindADateModeActivity extends AppCompatActivity {
                         text.setPadding(25,25,25,25);
                         text.setGravity(Gravity.CENTER);
 
-                        // Add text to card and card to layout
-                        card.addView(text);
+                        // Create edit button to go in card
+                        ImageView editButton = new ImageView(context);
+                        LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(150,150);
+                        editButton.setLayoutParams(imageParams);
+                        editButton.setImageResource(R.drawable.edit_icon);
+                        editButton.setClickable(true);
+
+                        // Pass event data into edit activity when edit button clicked
+                        editButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //TODO
+                            }
+                        });
+
+                        // Create linear layout with text and button
+                        LinearLayout linLay = new LinearLayout(context);
+                        linLay.setOrientation(LinearLayout.HORIZONTAL);
+                        linLay.addView(text);
+                        linLay.addView(editButton);
+                        card.addView(linLay);
+
+                        // Add card to layout
                         cardHolder.addView(card);
                         prevCardViewId = curCardViewId;
                     }
