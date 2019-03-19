@@ -97,7 +97,7 @@ public class FindADateModeActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     int prevCardViewId = 0;
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+                    for (final QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         // Create card with text view and edit button for each of user's events
                         CardView card = new CardView(context);
@@ -127,11 +127,13 @@ public class FindADateModeActivity extends AppCompatActivity {
                         editButton.setImageResource(R.drawable.edit_icon);
                         editButton.setClickable(true);
 
-                        // Pass event data into edit activity when edit button clicked
+                        // Pass event ID into edit activity when edit button clicked
                         editButton.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //TODO
+                                Intent intent = new Intent(context, EditEventActivity.class);
+                                intent.putExtra("CurrentEvent", document.getId());
+                                startActivity(intent);
                             }
                         });
 
