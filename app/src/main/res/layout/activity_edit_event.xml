@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NewEventActivity">
+    tools:context=".EditEventActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
             android:id="@+id/new_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/new_event"
+            android:text="@string/edit_event"
             android:textAlignment="center"
             android:textSize="36sp"
             android:paddingBottom="50dp"
@@ -38,18 +38,33 @@
 
         <include layout="@layout/content_event_details" />
 
+         <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center" >
 
-        <Button
-            android:id="@+id/submit_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
-            android:text="@string/submit_button"
-            android:textColor="@color/backgroundColor"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginTop="25dp"
-            android:layout_gravity="center"/>
+             <Button
+                 android:id="@+id/submit_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:background="@color/colorAccent"
+                 android:text="@string/submit_button"
+                 android:textColor="@color/backgroundColor"
+                 android:textSize="24sp"
+                 android:textStyle="bold"
+                 android:layout_marginRight="25dp"/>
+
+             <Button
+                 android:id="@+id/delete_button"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:background="@color/colorAccent"
+                 android:text="@string/delete_button"
+                 android:textColor="@color/backgroundColor"
+                 android:textSize="24sp"
+                 android:textStyle="bold"
+                 android:layout_marginLeft="25dp"/>
+         </TableRow>
 
     </LinearLayout>
 

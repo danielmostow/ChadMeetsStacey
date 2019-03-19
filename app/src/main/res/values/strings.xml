@@ -22,15 +22,17 @@
     <string name="create_event">Create Event</string>
     <string name="my_ongoing_events">My Ongoing Events:</string>
 
-    <!-- Strings related to new event -->
+    <!-- Strings related to new/edit event -->
     <string name="title_activity_new_event">NewEventActivity</string>
     <string name="new_event">New Event:</string>
+    <string name="edit_event">Edit Event:</string>
     <string name="event_name">Event Name:</string>
     <string name="date">Date:</string>
     <string name="time">Time:</string>
     <string name="location">Location:</string>
     <string name="description">Description:</string>
     <string name="submit_button">Submit</string>
+    <string name="delete_button">Delete</string>
 
     <!-- Strings related to new user -->
     <string name="title_activity_new_user">NewUserActivity</string>

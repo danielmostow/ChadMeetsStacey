@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class NewEventActivityFragment extends Fragment {
+public class EventDetailsFragment extends Fragment {
 
-    public NewEventActivityFragment() {
+    public EventDetailsFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_new_event, container, false);
+        return inflater.inflate(R.layout.fragment_event_details, container, false);
     }
 }
