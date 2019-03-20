@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ListModeActivity"
+            android:label="@string/title_activity_list_mode"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".EditEventActivity"
             android:label="@string/title_activity_edit_event"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -18,7 +18,7 @@
     </string>
     <!-- Strings related to find a date mode -->
     <string name="title_activity_find_adate_mode">FindADateMode</string>
-    <string name="swipe_mode">Swipe Mode</string>
+    <string name="list_mode">List Mode</string>
     <string name="create_event">Create Event</string>
     <string name="my_ongoing_events">My Ongoing Events:</string>
 
@@ -48,4 +48,5 @@
     <string name="register_button">Register:</string>
 
     <string name="action_settings">Settings</string>
+    <string name="title_activity_list_mode">ListModeActivity</string>
 </resources>
