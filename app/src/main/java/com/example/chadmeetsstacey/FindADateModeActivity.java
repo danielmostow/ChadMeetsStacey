@@ -41,6 +41,23 @@ public class FindADateModeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_adate_mode);
         Log.d(TAG, "onCreate() method called!");
+
+        // Set up listeners for buttons
+        Button createEventButton = (Button) findViewById(R.id.create_event);
+        createEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createEvent();
+            }
+        });
+
+        Button listModeButton = (Button) findViewById(R.id.list_mode);
+        listModeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToListMode();
+            }
+        });
     }
 
     @Override
@@ -76,8 +93,14 @@ public class FindADateModeActivity extends AppCompatActivity {
     }
 
     // Takes user to create event screen
-    public void createEvent(View view) {
+    public void createEvent() {
         Intent intent = new Intent(this, NewEventActivity.class);
+        startActivity(intent);
+    }
+
+    // Takes user to list mode
+    public void goToListMode() {
+        Intent intent = new Intent(this, ListModeActivity.class);
         startActivity(intent);
     }
 
