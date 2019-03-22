@@ -43,6 +43,12 @@
     <string name="confirm_password">Confirm Password:</string>
     <string name="first_name">First Name:</string>
     <string name="age">Age:</string>
+    <string name="gender">Gender:</string>
+    <string-array name="gender_array">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
     <string name="grade">Grade:</string>
     <string name="greek_org">Greek Organization:</string>
     <string name="register_button">Register:</string>

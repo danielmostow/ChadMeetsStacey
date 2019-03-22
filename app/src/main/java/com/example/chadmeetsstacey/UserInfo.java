@@ -6,6 +6,8 @@ public class UserInfo {
     private String firstName;
     private String greekOrg;
     private int age;
+    // 0 = male, 1 = female, 2 = other
+    private int gender;
     private String grade;
     private String biography;
     // TODO: Add way to access pictures
@@ -15,11 +17,12 @@ public class UserInfo {
         // Need for Firebase purposes
     }
 
-    public UserInfo(String emailAddress, String firstName, String greekOrg, int age, String grade) {
+    public UserInfo(String emailAddress, String firstName, String greekOrg, int age, int gender, String grade) {
         this.emailAddress = emailAddress;
         this.firstName = firstName;
         this.greekOrg = greekOrg;
         this.age = age;
+        this.gender = gender;
         this.grade = grade;
     }
 
@@ -41,6 +44,8 @@ public class UserInfo {
         return age;
     }
 
+    public int getGender() { return gender; }
+
     public String getGrade() {
         return grade;
     }
@@ -48,4 +53,5 @@ public class UserInfo {
     public String getBiography() {
         return biography;
     }
+
 }
