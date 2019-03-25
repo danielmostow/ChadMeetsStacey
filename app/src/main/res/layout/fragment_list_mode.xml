@@ -11,6 +11,16 @@
         android:layout_height="wrap_content"
         android:text="@string/find_a_date_mode" />
 
+    <TextView
+        android:id="@+id/upcoming_events"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:text="@string/upcoming_events"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
