@@ -71,7 +71,7 @@ public class FindADateModeActivity extends AppCompatActivity {
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT
         );
-        GetUserEvents();
+        getUserEvents();
     }
 
     @Override
@@ -102,10 +102,11 @@ public class FindADateModeActivity extends AppCompatActivity {
     public void goToListMode() {
         Intent intent = new Intent(this, ListModeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     // Loads all of user's events dynamically
-    public void GetUserEvents() {
+    public void getUserEvents() {
         cardHolder = (LinearLayout) findViewById(R.id.my_events_wrapper);
         // Avoid duplicating events on addition of new event
         cardHolder.removeAllViews();
