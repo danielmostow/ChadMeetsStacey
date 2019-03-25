@@ -100,7 +100,30 @@ public class NewUserActivity extends AppCompatActivity {
                                                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                                                     @Override
                                                     public void onSuccess(DocumentReference documentReference) {
-                                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                                        Log.d(TAG, "User added with ID: " + documentReference.getId());
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w(TAG, "Error adding document", e);
+                                                    }
+                                                });
+
+                                        // Create document in Settings collection for new user
+                                        // Set default preferred gender
+                                        // TODO: Handle other gender
+                                        int preferredGender = 1;
+                                        if (genderSelection == 1) {
+                                            preferredGender = 0;
+                                        }
+                                        Settings settings = new Settings(email.getText().toString(), preferredGender);
+                                        db.collection("settings")
+                                                .add(settings)
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentReference documentReference) {
+                                                        Log.d(TAG, "Settings added with ID: " + documentReference.getId());
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
