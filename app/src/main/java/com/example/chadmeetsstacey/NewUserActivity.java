@@ -96,19 +96,7 @@ public class NewUserActivity extends AppCompatActivity {
                                                 firstName.getText().toString(), greekOrg.getText().toString(),
                                                 Integer.parseInt(age.getText().toString()), genderSelection, grade.getText().toString());
                                         db.collection("users")
-                                                .add(user)
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentReference documentReference) {
-                                                        Log.d(TAG, "User added with ID: " + documentReference.getId());
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.w(TAG, "Error adding document", e);
-                                                    }
-                                                });
+                                                .document(email.getText().toString()).set(user);
 
                                         // Create document in Settings collection for new user
                                         // Set default preferred gender
@@ -118,20 +106,7 @@ public class NewUserActivity extends AppCompatActivity {
                                             preferredGender = 0;
                                         }
                                         Settings settings = new Settings(email.getText().toString(), preferredGender);
-                                        db.collection("settings")
-                                                .add(settings)
-                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentReference documentReference) {
-                                                        Log.d(TAG, "Settings added with ID: " + documentReference.getId());
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.w(TAG, "Error adding document", e);
-                                                    }
-                                                });
+                                        db.collection("settings").document(email.getText().toString()).set(settings);
                                         finish();
                                     } else {
                                         Log.d(TAG, "User has already been created previously");

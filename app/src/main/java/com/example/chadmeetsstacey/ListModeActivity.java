@@ -3,13 +3,21 @@ package com.example.chadmeetsstacey;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class ListModeActivity extends AppCompatActivity {
     private static final String TAG = "ListModeActivity";
@@ -61,7 +69,14 @@ public class ListModeActivity extends AppCompatActivity {
         // Access a Cloud Firestore instance
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-        // Get all events where current user's preferred gender = event creator's gender
+        /*
+            Get all events where current user's preferred gender = event creator's gender
+         */
+        FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+        String currUserEmail = currUser.getEmail();
+
+        // Get user's preferred gender via settings
+
 
     }
 
