@@ -64,7 +64,13 @@
     <string name="my_events">My Events:"</string>
     <string name="other_events">Other Events:"</string>
 
+    <!-- Strings related to messages -->
+    <string name="title_activity_message">MessageActivity</string>
+    <string name="new_message">New Message Description</string>
+    <string name="send_message">Send Message</string>
+
     <string name="action_settings">Settings</string>
+
 
 
 </resources>
