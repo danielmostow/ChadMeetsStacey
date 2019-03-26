@@ -64,11 +64,12 @@ public class OtherEventActivity extends AppCompatActivity {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Add current user to event's list of potential matches
-                // TODO: Create match instance
-                db.collection("events").document(eventId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+
+                db.collection("events").document(eventId)
+                        .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        // Add current user to event's list of potential matches
                         UserEvent event = documentSnapshot.toObject(UserEvent.class);
                         event.addPotentialMatch(currUserEmail);
                         db.collection("events").document(eventId)
@@ -77,7 +78,6 @@ public class OtherEventActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d(TAG, "User added to potential matches!");
-                                        finish();
 
                                     }
                                 })
@@ -87,6 +87,29 @@ public class OtherEventActivity extends AppCompatActivity {
                                         Log.w(TAG, "Error writing document", e);
                                     }
                                 });
+
+                        // Create match
+                        String hostEmail = event.getCreatingUser();
+                        String eventName = event.getEventName();
+                        Match match = new Match(hostEmail, currUserEmail,
+                                                eventName, eventId);
+                        // Add match to database with key of host + current + eventId
+                        db.collection("matches").document(hostEmail+currUserEmail+eventId)
+                                .set(match).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        Log.d(TAG, "Match created!");
+
+                                }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error writing document", e);
+                                    }
+                                });
+
+                        finish();
                     }
                 });
             }
@@ -95,10 +118,10 @@ public class OtherEventActivity extends AppCompatActivity {
         declineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Add current user to event's list of declined matches
                 db.collection("events").document(eventId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        // Add current user to event's list of declined matches
                         UserEvent event = documentSnapshot.toObject(UserEvent.class);
                         event.addDeclinedMatch(currUserEmail);
                         db.collection("events").document(eventId)
@@ -107,7 +130,6 @@ public class OtherEventActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d(TAG, "User added to declined matches!");
-                                        finish();
 
                                     }
                                 })
@@ -117,6 +139,7 @@ public class OtherEventActivity extends AppCompatActivity {
                                         Log.w(TAG, "Error writing document", e);
                                     }
                                 });
+                        finish();
                     }
                 });
             }
