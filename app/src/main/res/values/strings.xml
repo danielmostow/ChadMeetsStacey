@@ -27,7 +27,7 @@
     <string name="find_a_date_mode">Find A Date Mode</string>
     <string name="upcoming_events">Upcoming Events:</string>
 
-    <!-- Strings related to new/edit event -->
+    <!-- Strings related to new/edit/other event -->
     <string name="title_activity_new_event">NewEventActivity</string>
     <string name="title_activity_edit_event">EditEventActivity</string>
     <string name="new_event">New Event:</string>

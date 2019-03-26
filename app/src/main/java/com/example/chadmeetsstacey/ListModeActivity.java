@@ -82,7 +82,7 @@ public class ListModeActivity extends AppCompatActivity {
             Get all events where current user's preferred gender = event creator's gender
          */
         FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
-        String currUserEmail = currUser.getEmail();
+        final String currUserEmail = currUser.getEmail();
 
         // Get user's preferred gender via settings
         db.collection("settings").document(currUserEmail).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -104,11 +104,13 @@ public class ListModeActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         UserInfo creatingUser = documentSnapshot.toObject(UserInfo.class);
-                                        // Check if event user's gender = current user's preferred gender
-                                        if (preferredGender == creatingUser.getGender()) {
+                                        UserEvent userEvent = event.toObject(UserEvent.class);
+                                        // Add event if preferred gender matches creating user's gender and user hasn't swiped on event
+                                        if (preferredGender == creatingUser.getGender() &&
+                                            !userEvent.getDeclinedMatches().contains(currUserEmail) &&
+                                            !userEvent.getPotentialMatches().contains(currUserEmail)) {
                                             // Add card to list for event
-                                            UserEvent userEvent = event.toObject(UserEvent.class);
-                                            addEvent(userEvent, creatingUser);
+                                            addEvent(userEvent, creatingUser, event.getId());
                                         }
                                     }
                                 });
@@ -125,7 +127,7 @@ public class ListModeActivity extends AppCompatActivity {
     }
 
     // Load one card dynamically
-    public void addEvent(final UserEvent event, final UserInfo creatingUser) {
+    public void addEvent(final UserEvent event, final UserInfo creatingUser, final String eventId) {
         // Create clickable card
         CardView card = new CardView(context);
         card.setId(cardId);
@@ -161,8 +163,10 @@ public class ListModeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(context, OtherEventActivity.class);
                 // Add required Strings to intent
+                intent.putExtra("eventId", eventId);
                 intent.putExtra("host", creatingUser.getFirstName());
                 intent.putExtra("emailAddress", creatingUser.getEmailAddress());
+                intent.putExtra("eventName", event.getEventName());
                 intent.putExtra("date", event.getDate());
                 intent.putExtra("time", event.getTime());
                 intent.putExtra("location", event.getLocation());

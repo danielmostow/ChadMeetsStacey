@@ -16,6 +16,7 @@ public class UserEvent {
     private String description;
     private String location;
     private List<String> potentialMatches;
+    private List<String> declinedMatches;
     private boolean matchConfirmed;
 
     // Constructors
@@ -36,6 +37,7 @@ public class UserEvent {
         description = des;
         location = loc;
         potentialMatches = new ArrayList<String>(); // Initially are no matches for user
+        declinedMatches = new ArrayList<String>();
         matchConfirmed = false;
     }
 
@@ -72,8 +74,21 @@ public class UserEvent {
         return potentialMatches;
     }
 
+    public List<String> getDeclinedMatches() {
+        return declinedMatches;
+    }
+
     public boolean getMatchConfirmed() {
         return matchConfirmed;
+    }
+
+    // Provide means to append to potentialMatches and declinedMatches
+    public void addPotentialMatch(String userEmail) {
+        this.potentialMatches.add(userEmail);
+    }
+
+    public void addDeclinedMatch(String userEmail) {
+        this.declinedMatches.add(userEmail);
     }
 
 }
