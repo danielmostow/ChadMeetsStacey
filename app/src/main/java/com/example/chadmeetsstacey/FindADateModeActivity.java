@@ -71,7 +71,7 @@ public class FindADateModeActivity extends AppCompatActivity {
         messagesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goToMessages();
+                goToMatches();
             }
         });
     }
@@ -129,12 +129,11 @@ public class FindADateModeActivity extends AppCompatActivity {
         //finish();
     }
 
-    // Takes user to their messages
-    public void goToMessages() {
-        // TODO: Uncomment
-        //Intent intent = new Intent(this, MessagesActivity.class);
-        //startActivity(intent);
-        //finish();
+    // Takes user to their matches
+    public void goToMatches() {
+        Intent intent = new Intent(this, MatchesActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     // Loads all of user's events dynamically
