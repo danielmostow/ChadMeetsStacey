@@ -123,10 +123,9 @@ public class FindADateModeActivity extends AppCompatActivity {
 
     // Takes user to their profile
     public void goToProfile() {
-        // TODO: Uncomment
-        //Intent intent = new Intent(this, MyProfileActivity.class);
-        //startActivity(intent);
-        //finish();
+        Intent intent = new Intent(this, MyProfileActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     // Takes user to their matches
