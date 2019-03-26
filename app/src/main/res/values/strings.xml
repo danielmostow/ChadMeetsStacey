@@ -68,10 +68,14 @@
     <string name="title_activity_message">MessageActivity</string>
     <string name="new_message">New Message Description</string>
     <string name="send_message">Send Message</string>
+
+    <!-- Strings related to profile -->
+    <string name="title_activity_my_profile">MyProfileActivity</string>
     <string name="settings">Settings</string>
+    <string name="bio">Biography goes here!</string>
 
     <string name="action_settings">Settings</string>
-    <string name="title_activity_my_profile">MyProfileActivity</string>
+
 
 
 </resources>

@@ -11,6 +11,7 @@ public class UserInfo {
     private String grade;
     private String biography;
     // TODO: Add way to access pictures
+    private boolean hasProfilePic;
 
     // Constructors
     public UserInfo() {
@@ -24,6 +25,8 @@ public class UserInfo {
         this.age = age;
         this.gender = gender;
         this.grade = grade;
+        this.biography = "";
+        this.hasProfilePic = false;
     }
 
     // Getter methods
@@ -54,4 +57,7 @@ public class UserInfo {
         return biography;
     }
 
+    public boolean getHasProfilePic() {
+        return hasProfilePic;
+    }
 }
