@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ public class OtherEventActivity extends AppCompatActivity {
     private TextView time;
     private TextView location;
     private TextView description;
+    private ImageView userProfile;
     private Button acceptButton;
     private Button declineButton;
 
@@ -46,6 +48,7 @@ public class OtherEventActivity extends AppCompatActivity {
         description = (TextView) findViewById(R.id.other_event_description);
         acceptButton = (Button) findViewById(R.id.accept);
         declineButton = (Button) findViewById(R.id.decline);
+        userProfile = (ImageView) findViewById(R.id.user_profile);
 
         // Load data into each text field
         // TODO: load user picture

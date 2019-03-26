@@ -58,6 +58,22 @@ public class FindADateModeActivity extends AppCompatActivity {
                 goToListMode();
             }
         });
+
+        Button profileButton = (Button) findViewById(R.id.profile_icon);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToProfile();
+            }
+        });
+
+        Button messagesButton = (Button) findViewById(R.id.messages_icon);
+        messagesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMessages();
+            }
+        });
     }
 
     @Override
@@ -103,6 +119,22 @@ public class FindADateModeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ListModeActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    // Takes user to their profile
+    public void goToProfile() {
+        // TODO: Uncomment
+        //Intent intent = new Intent(this, MyProfileActivity.class);
+        //startActivity(intent);
+        //finish();
+    }
+
+    // Takes user to their messages
+    public void goToMessages() {
+        // TODO: Uncomment
+        //Intent intent = new Intent(this, MessagesActivity.class);
+        //startActivity(intent);
+        //finish();
     }
 
     // Loads all of user's events dynamically
