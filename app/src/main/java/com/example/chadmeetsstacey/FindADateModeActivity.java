@@ -118,18 +118,21 @@ public class FindADateModeActivity extends AppCompatActivity {
     public void goToListMode() {
         Intent intent = new Intent(this, ListModeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     // Takes user to their profile
     public void goToProfile() {
         Intent intent = new Intent(this, MyProfileActivity.class);
         startActivity(intent);
+        finish();
     }
 
     // Takes user to their matches
     public void goToMatches() {
         Intent intent = new Intent(this, MatchesActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void goToSettings(View view)
