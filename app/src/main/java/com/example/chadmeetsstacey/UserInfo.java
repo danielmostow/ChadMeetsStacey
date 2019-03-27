@@ -1,5 +1,8 @@
 package com.example.chadmeetsstacey;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserInfo {
     // Instance variables
     private String emailAddress;
@@ -10,8 +13,8 @@ public class UserInfo {
     private int gender;
     private String grade;
     private String biography;
-    // TODO: Add way to access pictures
     private boolean hasProfilePic;
+    private List<String> eventsSwipedOn;
 
     // Constructors
     public UserInfo() {
@@ -27,6 +30,7 @@ public class UserInfo {
         this.grade = grade;
         this.biography = "";
         this.hasProfilePic = false;
+        this.eventsSwipedOn = new ArrayList<String>();
     }
 
     // Getter methods
@@ -59,5 +63,14 @@ public class UserInfo {
 
     public boolean getHasProfilePic() {
         return hasProfilePic;
+    }
+
+    public List<String> getEventsSwipedOn() {
+        return eventsSwipedOn;
+    }
+
+    // Provide means to append to eventsSwipedOn
+    public void addEventSwipeOn(String eventId) {
+        this.eventsSwipedOn.add(eventId);
     }
 }

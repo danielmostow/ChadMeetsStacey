@@ -138,6 +138,32 @@ public class OtherEventActivity extends AppCompatActivity {
                                     }
                                 });
 
+                        // Add to user's events swiped on
+                        db.collection("users").document(currUserEmail)
+                                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                UserInfo user = documentSnapshot.toObject(UserInfo.class);
+                                user.addEventSwipeOn(eventId);
+                                db.collection("users").document(currUserEmail)
+                                        .set(user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Log.d(TAG, "User added to potential matches!");
+
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error writing document", e);
+                                            }
+                                        });
+
+                            }
+                        });
+
                         finish();
                     }
                 });

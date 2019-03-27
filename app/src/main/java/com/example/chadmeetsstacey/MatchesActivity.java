@@ -57,9 +57,7 @@ public class MatchesActivity extends AppCompatActivity {
 
         // Get View objects
         myEventsLayout = (LinearLayout) findViewById(R.id.my_events_matches);
-        myEventsLayout.setWeightSum(3);
         otherEventsLayout = (LinearLayout) findViewById(R.id.other_events_matches);
-        otherEventsLayout.setWeightSum(3);
         context = getApplicationContext();
         layoutparams = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -72,7 +70,8 @@ public class MatchesActivity extends AppCompatActivity {
         // Load matches for all of user's individual events
         loadMyMatches();
 
-        // TODO: load all other events
+        // Load matches for all other events that user has swiped on
+        loadOtherMatches();
 
     }
 
@@ -98,13 +97,39 @@ public class MatchesActivity extends AppCompatActivity {
             });
     }
 
+    // Load matches for all other events that user has swiped on
+    public void loadOtherMatches() {
+        // Search through all events user has swiped on
+        db.collection("users").document(currEmail)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                // Create user object
+                UserInfo currUser = documentSnapshot.toObject(UserInfo.class);
+
+                // Iterate over all events swiped on
+                for (String eventId: currUser.getEventsSwipedOn()) {
+                    db.collection("events").document(eventId)
+                            .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            // Create Event object
+                            UserEvent event = documentSnapshot.toObject(UserEvent.class);
+                            displayEventWithMatches(event, EventType.OTHER_EVENTS);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
     // Creates view objects for single event
     public void displayEventWithMatches(UserEvent event, EventType type) {
         // Add horizontal layout to overall linear layout
         LinearLayout eventLayout = new LinearLayout(context);
         eventLayout.setLayoutParams(layoutparams);
         eventLayout.setOrientation(LinearLayout.HORIZONTAL);
-        myEventsLayout.addView(eventLayout);
 
         // Add TextView for event to horizontal layout
         TextView eventText = new TextView(context);
@@ -116,6 +141,7 @@ public class MatchesActivity extends AppCompatActivity {
         eventLayout.addView(eventText);
 
         if (type == EventType.MY_EVENTS) {
+            myEventsLayout.addView(eventLayout);
             // Display all matches for my event
             // Add horizontal scroll view to horizontal layout
             HorizontalScrollView matches = new HorizontalScrollView(context);
@@ -135,6 +161,7 @@ public class MatchesActivity extends AppCompatActivity {
             }
 
         } else if (type == EventType.OTHER_EVENTS) {
+            otherEventsLayout.addView(eventLayout);
             // Display only creating user for other event
             // Create horizontal linear layout to hold name and pic
             LinearLayout matchLayout = new LinearLayout(context);
@@ -201,6 +228,5 @@ public class MatchesActivity extends AppCompatActivity {
         // TODO: Send email addresses as intents
         Intent intent = new Intent(this, MessageActivity.class);
         startActivity(intent);
-        finish();
     }
 }
