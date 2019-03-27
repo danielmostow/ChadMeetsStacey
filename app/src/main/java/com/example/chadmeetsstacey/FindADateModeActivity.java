@@ -81,6 +81,12 @@ public class FindADateModeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToSettings(View view)
+    {
+        Intent intent = new Intent(context, SettingsActivity.class);
+        startActivity(intent);
+    }
+
     // Loads all of user's events dynamically
     public void GetUserEvents() {
         cardHolder = (LinearLayout) findViewById(R.id.my_events_wrapper);

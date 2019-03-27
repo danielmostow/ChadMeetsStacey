@@ -121,44 +121,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View v)
             {
-                /*final String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
-                if (TextUtils.isEmpty(email)) {
-                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
 
-                if (TextUtils.isEmpty(password)) {
-                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                auth.createUserWithEmailAndPassword(email,password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(LoginActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
-                                auth.getCurrentUser().sendEmailVerification();
-
-                                // Create document in User collection for new user
-                                UserInfo user = new UserInfo(email);
-                                db.collection("users")
-                                        .add(user)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.w(TAG, "Error adding document", e);
-                                            }
-                                        });
-                                //finish();
-                            }
-                        });
-                */
                 // Start new user activity
                 Intent intent = new Intent(context, NewUserActivity.class);
                 startActivity(intent);
@@ -176,6 +139,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
+
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;

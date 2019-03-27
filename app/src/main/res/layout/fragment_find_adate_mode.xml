@@ -20,6 +20,15 @@
         android:text="@string/create_event"
         android:textSize="36sp" />
 
+    <Button
+        android:id="@+id/action_settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Settings"
+        android:onClick="goToSettings"
+        android:textSize="36sp" />
+
     <TextView
         android:id="@+id/my_ongoing_events"
         android:layout_width="match_parent"
