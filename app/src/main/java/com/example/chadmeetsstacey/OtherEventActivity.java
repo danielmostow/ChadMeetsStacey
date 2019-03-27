@@ -1,6 +1,7 @@
 package com.example.chadmeetsstacey;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +18,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class OtherEventActivity extends AppCompatActivity {
 
@@ -30,6 +34,7 @@ public class OtherEventActivity extends AppCompatActivity {
     private ImageView userProfile;
     private Button acceptButton;
     private Button declineButton;
+    private FirebaseStorage storage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,7 @@ public class OtherEventActivity extends AppCompatActivity {
 
         // Access a Cloud Firestore instance from your Activity
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        storage = FirebaseStorage.getInstance();
 
         // Get text fields and buttons
         eventName = (TextView) findViewById(R.id.other_event_name);
@@ -51,7 +57,6 @@ public class OtherEventActivity extends AppCompatActivity {
         userProfile = (ImageView) findViewById(R.id.user_profile);
 
         // Load data into each text field
-        // TODO: load user picture
         Intent intent = getIntent();
         eventName.setText(intent.getStringExtra("eventName"));
         host.setText("Host: " + intent.getStringExtra("host"));
@@ -59,6 +64,27 @@ public class OtherEventActivity extends AppCompatActivity {
         time.setText("Time: " +intent.getStringExtra("time"));
         location.setText("Location: " + intent.getStringExtra("location"));
         description.setText("Description: " + intent.getStringExtra("description"));
+
+        // Load user picture
+        //TODO: link to their profile
+        String hostEmail = intent.getStringExtra("emailAddress");
+        db.collection("users").document(hostEmail)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        UserInfo hostUser = documentSnapshot.toObject(UserInfo.class);
+                        if (hostUser.getHasProfilePic()) {
+                            StorageReference picRef = storage.getReference().child("profilePics/" + hostUser.getEmailAddress());
+                            picRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Picasso.get().load(uri).into(userProfile);
+                                }
+                            });
+                        }
+
+                    }
+                });
 
         // Set up listeners for buttons
         final String eventId = intent.getStringExtra("eventId");
