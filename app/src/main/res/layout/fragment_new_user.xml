@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/email"
                 android:textAlignment="textEnd"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/email_text"
@@ -51,7 +51,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/password"
                 android:textAlignment="textEnd"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/password_text"
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/confirm_password"
                 android:textAlignment="textEnd"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/confirm_password_text"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/first_name"
                 android:textAlignment="textEnd"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/first_name_text"
@@ -103,9 +103,9 @@
         </TableRow>
 
         <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp">
 
             <TextView
                 android:id="@+id/age"
@@ -113,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/age"
                 android:textAlignment="textEnd"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/age_text"
@@ -128,12 +128,32 @@
             android:layout_marginBottom="20dp">
 
             <TextView
+                android:id="@+id/gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/gender"
+                android:textAlignment="textEnd"
+                android:textSize="16sp" />
+
+            <Spinner
+                android:id="@+id/gender_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="20dp">
+
+            <TextView
                 android:id="@+id/grade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/grade"
                 android:textAlignment="textEnd"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/grade_text"
@@ -153,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/greek_org"
                 android:textAlignment="textEnd"
-                android:textSize="24sp" />
+                android:textSize="16sp" />
 
             <EditText
                 android:id="@+id/greek_org_text"

@@ -41,6 +41,39 @@ public class FindADateModeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_adate_mode);
         Log.d(TAG, "onCreate() method called!");
+
+        // Set up listeners for buttons
+        Button createEventButton = (Button) findViewById(R.id.create_event);
+        createEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createEvent();
+            }
+        });
+
+        Button listModeButton = (Button) findViewById(R.id.list_mode);
+        listModeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToListMode();
+            }
+        });
+
+        Button profileButton = (Button) findViewById(R.id.profile_icon);
+        profileButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToProfile();
+            }
+        });
+
+        Button messagesButton = (Button) findViewById(R.id.messages_icon);
+        messagesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMatches();
+            }
+        });
     }
 
     @Override
@@ -78,6 +111,24 @@ public class FindADateModeActivity extends AppCompatActivity {
     // Takes user to create event screen
     public void createEvent(View view) {
         Intent intent = new Intent(this, NewEventActivity.class);
+        startActivity(intent);
+    }
+
+    // Takes user to list mode
+    public void goToListMode() {
+        Intent intent = new Intent(this, ListModeActivity.class);
+        startActivity(intent);
+    }
+
+    // Takes user to their profile
+    public void goToProfile() {
+        Intent intent = new Intent(this, MyProfileActivity.class);
+        startActivity(intent);
+    }
+
+    // Takes user to their matches
+    public void goToMatches() {
+        Intent intent = new Intent(this, MatchesActivity.class);
         startActivity(intent);
     }
 
