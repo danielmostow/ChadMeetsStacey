@@ -109,7 +109,7 @@ public class FindADateModeActivity extends AppCompatActivity {
     }
 
     // Takes user to create event screen
-    public void createEvent(View view) {
+    public void createEvent() {
         Intent intent = new Intent(this, NewEventActivity.class);
         startActivity(intent);
     }
