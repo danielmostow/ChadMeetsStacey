@@ -66,13 +66,21 @@ public class MatchesActivity extends AppCompatActivity {
 
         // Get current user's email
         currEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Clear views from layouts
+        myEventsLayout.removeAllViews();
+        otherEventsLayout.removeAllViews();
 
         // Load matches for all of user's individual events
         loadMyMatches();
 
         // Load matches for all other events that user has swiped on
         loadOtherMatches();
-
     }
 
     // Loads all of the people who have swiped on current user's events
@@ -87,7 +95,7 @@ public class MatchesActivity extends AppCompatActivity {
                             Log.d(TAG, document.getId() + " => " + document.getData());
                             // Create Event object
                             UserEvent event = document.toObject(UserEvent.class);
-                            displayEventWithMatches(event, EventType.MY_EVENTS);
+                            displayEventWithMatches(event, EventType.MY_EVENTS, document.getId());
                         }
 
                     } else {
@@ -108,14 +116,14 @@ public class MatchesActivity extends AppCompatActivity {
                 UserInfo currUser = documentSnapshot.toObject(UserInfo.class);
 
                 // Iterate over all events swiped on
-                for (String eventId: currUser.getEventsSwipedOn()) {
+                for (final String eventId: currUser.getEventsSwipedOn()) {
                     db.collection("events").document(eventId)
                             .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             // Create Event object
                             UserEvent event = documentSnapshot.toObject(UserEvent.class);
-                            displayEventWithMatches(event, EventType.OTHER_EVENTS);
+                            displayEventWithMatches(event, EventType.OTHER_EVENTS, eventId);
                         }
                     });
                 }
@@ -125,7 +133,7 @@ public class MatchesActivity extends AppCompatActivity {
 
 
     // Creates view objects for single event
-    public void displayEventWithMatches(UserEvent event, EventType type) {
+    public void displayEventWithMatches(UserEvent event, EventType type, String eventId) {
         // Add horizontal layout to overall linear layout
         LinearLayout eventLayout = new LinearLayout(context);
         eventLayout.setLayoutParams(layoutparams);
@@ -157,7 +165,7 @@ public class MatchesActivity extends AppCompatActivity {
                 //TODO: CENTER
                 matchLayout.setGravity(View.TEXT_ALIGNMENT_CENTER);
                 matches.addView(matchLayout);
-                addMatchToView(otherUser, matchLayout);
+                addMatchToView(otherUser, matchLayout, eventId);
             }
 
         } else if (type == EventType.OTHER_EVENTS) {
@@ -170,13 +178,13 @@ public class MatchesActivity extends AppCompatActivity {
             //TODO: CENTER
             matchLayout.setGravity(View.TEXT_ALIGNMENT_CENTER);
             eventLayout.addView(matchLayout);
-            addMatchToView(event.getCreatingUser(), matchLayout);
+            addMatchToView(event.getCreatingUser(), matchLayout, eventId);
         }
 
     }
 
     // Add a match to the corresponding view and link match icon to message screen
-    public void addMatchToView(String otherUser, final LinearLayout linLay) {
+    public void addMatchToView(String otherUser, final LinearLayout linLay, final String eventId) {
         // Get user whose info will be displayed
         db.collection("users").document(otherUser)
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -200,6 +208,7 @@ public class MatchesActivity extends AppCompatActivity {
                 }
 
                 // Add user's pic to view
+                linLay.setPadding(50, 0, 0, 0);
                 linLay.addView(profilePic);
 
                 // Create TextView with user's name
@@ -216,7 +225,7 @@ public class MatchesActivity extends AppCompatActivity {
                 profilePic.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        linkToMessage(user.getEmailAddress());
+                        linkToMessage(user.getEmailAddress(), eventId);
                     }
                 });
             }
@@ -224,9 +233,11 @@ public class MatchesActivity extends AppCompatActivity {
     }
 
     // Links the profile pic to the corresponding message screen
-    public void linkToMessage(String otherEmail) {
-        // TODO: Send email addresses as intents
-        Intent intent = new Intent(this, MessageActivity.class);
+    public void linkToMessage(String otherEmail, String eventId) {
+        final Intent intent = new Intent(this, MessageActivity.class);
+        intent.putExtra("currEmail", currEmail);
+        intent.putExtra("otherEmail", otherEmail);
+        intent.putExtra("eventId", eventId);
         startActivity(intent);
     }
 }

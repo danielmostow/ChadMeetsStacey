@@ -44,4 +44,9 @@ public class Match {
     public List<Message> getMessages() {
         return messages;
     }
+
+    // Let message be added
+    public void addMessage(Message message) {
+        this.messages.add(message);
+    }
 }

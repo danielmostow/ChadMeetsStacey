@@ -70,7 +70,7 @@ public class UserInfo {
     }
 
     // Provide means to append to eventsSwipedOn
-    public void addEventSwipeOn(String eventId) {
+    public void addEventSwipedOn(String eventId) {
         this.eventsSwipedOn.add(eventId);
     }
 }

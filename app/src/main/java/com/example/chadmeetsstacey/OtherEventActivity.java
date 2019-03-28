@@ -144,7 +144,7 @@ public class OtherEventActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 UserInfo user = documentSnapshot.toObject(UserInfo.class);
-                                user.addEventSwipeOn(eventId);
+                                user.addEventSwipedOn(eventId);
                                 db.collection("users").document(currUserEmail)
                                         .set(user)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
