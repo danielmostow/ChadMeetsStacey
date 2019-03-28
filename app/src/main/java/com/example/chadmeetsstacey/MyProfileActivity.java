@@ -84,6 +84,7 @@ public class MyProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //TODO: allow for edit or settings
+                goToSettings();
             }
         });
 
@@ -135,6 +136,13 @@ public class MyProfileActivity extends AppCompatActivity {
         Intent intent = new Intent(this, FindADateModeActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    // Takes user to settings page
+    public void goToSettings()
+    {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     // Lets user upload a picture from their phone to their profile
