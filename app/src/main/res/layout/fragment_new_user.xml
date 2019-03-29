@@ -16,172 +16,178 @@
         android:paddingTop="50dp"
         android:textStyle="bold|italic" />
 
-    <TableLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="450dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp">
 
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/email"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="450dp">
 
-            <EditText
-                android:id="@+id/email_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10" />
-        </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp">
+                    <TextView
+                        android:id="@+id/email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/password"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/email_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/password_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10" />
-        </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp">
+                    <TextView
+                        android:id="@+id/password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/password"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/confirm_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/confirm_password"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/password_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPassword" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/confirm_password_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10" />
-        </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp">
+                    <TextView
+                        android:id="@+id/confirm_password"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/confirm_password"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/first_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/first_name"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/confirm_password_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="textPassword" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/first_name_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10" />
-        </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
 
-        <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="20dp">
+                    <TextView
+                        android:id="@+id/first_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_name"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/age"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/first_name_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/age_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10" />
-        </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp">
+                    <TextView
+                        android:id="@+id/age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/age"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/gender"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/gender"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/age_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+                </TableRow>
 
-            <Spinner
-                android:id="@+id/gender_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
 
-        </TableRow>
+                    <TextView
+                        android:id="@+id/gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/gender"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp" />
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp">
+                    <Spinner
+                        android:id="@+id/gender_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/grade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/grade"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/grade_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10" />
-        </TableRow>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="20dp">
+                    <TextView
+                        android:id="@+id/grade"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/grade"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/greek_org"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/greek_org"
-                android:textAlignment="textEnd"
-                android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/grade_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+                </TableRow>
 
-            <EditText
-                android:id="@+id/greek_org_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10" />
-        </TableRow>
-    </TableLayout>
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:id="@+id/greek_org"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/greek_org"
+                        android:textAlignment="textEnd"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/greek_org_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ems="10" />
+                </TableRow>
+            </TableLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/register_button"

@@ -216,13 +216,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                             if(auth.getCurrentUser().isEmailVerified())
                             {
 
-                                // Show a progress spinner, and kick off a background task to
-                                // perform the user login attempt.
-                                showProgress(true);
-                                mAuthTask = new UserLoginTask(email, password);
-                                mAuthTask.execute((Void) null);
-                                // Send to find a date mode
-                                getToFindADateMode(null);
+                              // Show a progress spinner, and kick off a background task to
+                              // perform the user login attempt.
+                              showProgress(true);
+                              mAuthTask = new UserLoginTask(email, password);
+                              mAuthTask.execute((Void) null);
+                              // Send to find a date mode
+                              getToFindADateMode(null);
                             }
                             else
                             {

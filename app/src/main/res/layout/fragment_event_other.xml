@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/user_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="20dp"
         tools:src="@tools:sample/avatars" />
 
@@ -19,11 +19,14 @@
         android:id="@+id/other_event_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginBottom="40dp"
         android:textStyle="bold|italic"
         android:textAlignment="center"
         android:textSize="36sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
 
     <TableLayout
         android:layout_width="match_parent"
@@ -38,8 +41,8 @@
                 android:id="@+id/other_event_host"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="20dp"
+                android:textSize="24sp" />
 
         </TableRow>
 
@@ -52,8 +55,8 @@
                 android:id="@+id/other_event_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginLeft="20dp" />
+                android:layout_marginLeft="20dp"
+                android:textSize="24sp" />
 
         </TableRow>
 
@@ -66,8 +69,8 @@
                 android:id="@+id/other_event_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginLeft="20dp"
+                android:textSize="24sp" />
 
         </TableRow>
 
@@ -80,8 +83,8 @@
                 android:id="@+id/other_event_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginLeft="20dp"
+                android:textSize="24sp" />
 
         </TableRow>
 
@@ -94,33 +97,36 @@
                 android:id="@+id/other_event_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:layout_marginLeft="20dp"/>
+                android:layout_marginLeft="20dp"
+                android:textSize="24sp" />
 
         </TableRow>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:gravity="center">
-
-            <Button
-                android:id="@+id/decline"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@color/red"
-                android:layout_marginRight="25dp"/>
-
-            <Button
-                android:id="@+id/accept"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@color/green"
-                android:layout_marginLeft="25dp"/>
-        </LinearLayout>
-
     </TableLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/decline"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginRight="25dp"
+            android:background="@color/red" />
+
+        <Button
+            android:id="@+id/accept"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="25dp"
+            android:background="@color/green" />
+    </LinearLayout>
+
 </LinearLayout>

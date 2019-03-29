@@ -152,8 +152,9 @@ public class MatchesActivity extends AppCompatActivity {
             myEventsLayout.addView(eventLayout);
             // Display all matches for my event
             // Add horizontal scroll view to horizontal layout
-            HorizontalScrollView matches = new HorizontalScrollView(context);
+            LinearLayout matches = new LinearLayout(context);
             matches.setLayoutParams(layoutparams);
+            matches.setOrientation(LinearLayout.HORIZONTAL);
             eventLayout.addView(matches);
 
             // Add all matches for that event to horizontal scroll view
