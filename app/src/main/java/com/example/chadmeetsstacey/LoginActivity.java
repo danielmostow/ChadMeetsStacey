@@ -222,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                               mAuthTask = new UserLoginTask(email, password);
                               mAuthTask.execute((Void) null);
                               // Send to find a date mode
-                              getToFindADateMode(null);
+                              getToFindADateMode(null);//
                             }
                             else
                             {
