@@ -106,7 +106,7 @@ public class NewUserActivity extends AppCompatActivity {
     // Attempts to register a new user
     private void attemptToRegister() {
         // TODO: Convert to age, grade, and greek org spinners
-        // TODO: save information if user hits back button
+        // TODO: Save information if user hits back button
 
         // If not all fields are valid, don't let user register
         if (!checkValidation()) {
