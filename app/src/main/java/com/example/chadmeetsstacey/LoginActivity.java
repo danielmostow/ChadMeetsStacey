@@ -131,11 +131,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    public void getToFindADateMode(View view) {
+    private void getToFindADateMode(View view) {
         Intent intent = new Intent(this, FindADateModeActivity.class);
         startActivity(intent);
     }
-    public void getToForgotPasswordMode(View view) {
+    private void getToForgotPasswordMode(View view) {
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
@@ -222,7 +222,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                               mAuthTask = new UserLoginTask(email, password);
                               mAuthTask.execute((Void) null);
                               // Send to find a date mode
-                              getToFindADateMode(null);//
+                              getToFindADateMode(null);
                             }
                             else
                             {
