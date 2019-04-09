@@ -105,16 +105,17 @@ public class NewUserActivity extends AppCompatActivity {
 
     // Attempts to register a new user
     private void attemptToRegister() {
+        // TODO: Convert to age, grade, and greek org spinners
+        // TODO: save information if user hits back button
+
         // If not all fields are valid, don't let user register
         if (!checkValidation()) {
             Toast.makeText(NewUserActivity.this, "Cannot register user with blank fields!", Toast.LENGTH_LONG).show();
             return;
         }
-        //TODO: Convert to age, grade, and greek org spinners
-        // TODO: save information if user hits back button
-        // Ensure password = password confirmation
-        //TODO: Check for valid password
-        if (password.getText().toString().equals(confirmPassword.getText().toString())) {
+
+        // Ensure password = password confirmation and password is valid
+        if (password.getText().toString().equals(confirmPassword.getText().toString()) && isValidPassword(password.getText().toString())) {
             auth.createUserWithEmailAndPassword(
                     email.getText().toString().trim(),password.getText().toString().trim())
                     .addOnCompleteListener(NewUserActivity.this, new OnCompleteListener<AuthResult>() {
@@ -142,13 +143,15 @@ public class NewUserActivity extends AppCompatActivity {
                                 db.collection("settings").document(email.getText().toString()).set(settings);
                                 finish();
                             } else {
-                                Log.d(TAG, "User has already been created previously");
-                                Toast.makeText(NewUserActivity.this, "User has already been created previously!", Toast.LENGTH_LONG).show();
+                                Log.d(TAG, "User could not be created");
+                                Toast.makeText(NewUserActivity.this, "User could not be created!", Toast.LENGTH_LONG).show();
                             }
                         }
                     });
-        } else {
+        } else if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
             Toast.makeText(NewUserActivity.this, "Passwords do not match!", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(NewUserActivity.this, "Password must be at least 8 characters, contain an uppercase letter, and a digit!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -167,6 +170,30 @@ public class NewUserActivity extends AppCompatActivity {
         }
 
         return allValidated;
+    }
+
+    // Returns whether or not the password fits all the requirements for a valid password
+    // Password must have at least 8 characters, an uppercase letter, and a digit
+    private boolean isValidPassword(String password) {
+        boolean validLength = false;
+        boolean hasUpper = false;
+        boolean hasDigit = false;
+        // Check length characteristic
+        if (password.length() >= 8) {
+            validLength = true;
+        }
+
+        // Check for uppercase and digit
+        for (int i = 0; i < password.length(); i++) {
+            char currChar = password.charAt(i);
+            if (Character.isDigit(currChar)) {
+                hasDigit = true;
+            } else if (Character.isUpperCase(currChar)) {
+                hasUpper = true;
+            }
+        }
+
+        return validLength && hasUpper && hasDigit;
     }
 
 }
