@@ -17,14 +17,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EditEventActivity extends AppCompatActivity {
 
     private static final String TAG = "EditEventActivity";
+    private String eventID;
+    private FirebaseFirestore db;
     private EditText eventName;
     private EditText date;
     private EditText time;
     private EditText location;
     private EditText description;
+    private List<EditText> allFields;
     private Button submitButton;
     private Button deleteButton;
 
@@ -34,7 +40,7 @@ public class EditEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_event);
 
         // Access a Cloud Firestore instance from your Activity
-        final FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // Get text fields and buttons
         eventName = (EditText) findViewById(R.id.event_name_text);
@@ -45,10 +51,19 @@ public class EditEventActivity extends AppCompatActivity {
         submitButton = (Button) findViewById(R.id.submit_button);
         deleteButton = (Button) findViewById(R.id.delete_button);
 
+        // Add all fields to list
+        allFields = new ArrayList<EditText>();
+        allFields.add(eventName);
+        allFields.add(date);
+        allFields.add(time);
+        allFields.add(location);
+        allFields.add(description);
+
         // Get event ID
         Intent intent = getIntent();
-        final String eventID = intent.getStringExtra("CurrentEvent");
+        eventID = intent.getStringExtra("CurrentEvent");
 
+        // Load event data
         db.collection("events").document(eventID)
                 .get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -71,31 +86,7 @@ public class EditEventActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Add field verification
-
-                // Create updated user event
-                UserEvent event = new UserEvent(eventName.getText().toString(),
-                        date.getText().toString(), time.getText().toString(),
-                        description.getText().toString(), location.getText().toString());
-
-                // Update event in database
-                db.collection("events").document(eventID)
-                        .set(event)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully updated!");
-                                finish();
-                                Toast.makeText(getApplicationContext(), eventName.getText().toString() + " updated!", Toast.LENGTH_LONG).show();
-
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w(TAG, "Error writing document", e);
-                            }
-                        });
+                attemptToEditEvent();
             }
         });
 
@@ -103,28 +94,87 @@ public class EditEventActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO: Use dialog box to confirm delete
-
-                // Delete event from database
-                db.collection("events").document(eventID)
-                        .delete()
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                                finish();
-                                Toast.makeText(getApplicationContext(), eventName.getText().toString() + " deleted!", Toast.LENGTH_LONG).show();
-
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.d(TAG, "Error deleting document", e);
-                            }
-                        });
+                attemptToDeleteEvent();
             }
         });
 
+    }
+
+    // Attempts to edit event
+    private void attemptToEditEvent() {
+        // If not all fields are valid, don't let user create event
+        if (!checkValidation()) {
+            Toast.makeText(EditEventActivity.this, "Cannot edit event with blank fields!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        // Create updated user event
+        UserEvent event = new UserEvent(eventName.getText().toString(),
+                date.getText().toString(), time.getText().toString(),
+                description.getText().toString(), location.getText().toString());
+
+        // Update event in database
+        db.collection("events").document(eventID)
+                .set(event)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        finish();
+                        Toast.makeText(getApplicationContext(), eventName.getText().toString() + " updated!", Toast.LENGTH_LONG).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error writing document", e);
+                    }
+                });
+        finish();
+        Toast.makeText(getApplicationContext(), eventName.getText().toString() + " updated!", Toast.LENGTH_LONG).show();
+
+    }
+
+    // Attempts to delete event
+    private void attemptToDeleteEvent() {
+        // TODO: Use dialog box to confirm delete
+
+        // Delete event from database
+        db.collection("events").document(eventID)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                        finish();
+                        Toast.makeText(getApplicationContext(), eventName.getText().toString() + " deleted!", Toast.LENGTH_LONG).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Error deleting document", e);
+                    }
+                });
+
+    }
+
+    // Returns whether or not data has been entered in each field
+    private boolean checkValidation() {
+        boolean allValidated = true;
+
+        // Cycle through all EditText fields
+        for (EditText currField: allFields) {
+            // If any field hasn't been filled, want to return false
+            if (currField.getText().toString().equals("")) {
+                allValidated = false;
+                // Display red warning next to field
+                currField.setError("Field cannot be blank!");
+            }
+        }
+
+        return allValidated;
     }
 }

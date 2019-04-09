@@ -122,7 +122,7 @@ public class NewUserActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(NewUserActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(NewUserActivity.this, email.getText().toString() + " registered!", Toast.LENGTH_SHORT).show();
                                 auth.getCurrentUser().sendEmailVerification();
 
                                 // Create document in User collection for new user
