@@ -3,6 +3,7 @@ package com.example.chadmeetsstacey;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -36,15 +37,14 @@ import java.util.List;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
     private FirebaseAuth auth;
-
+    private SharedPreferences sharedPref;
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
     private void changeActivity()
     {
-        Intent intent = new Intent(this.getApplicationContext(), LoginActivity.class);
-        startActivity(intent);
+
     }
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
@@ -191,6 +191,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
         private FirebaseAuth auth;
+        private static SharedPreferences sharedPref;
         private SettingsActivity settingsActivity = new SettingsActivity();
         @Override
         public void onCreate(Bundle savedInstanceState) {
@@ -208,7 +209,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
+                    sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.clear();
+                    editor.commit();
                     auth.signOut();
+
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                     return true;
                 }

@@ -5,7 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -69,6 +71,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+    private SharedPreferences sharedPref;
     private UserLoginTask mAuthTask = null;
     private FirebaseAuth auth;
     private boolean signInSuccess;
@@ -89,6 +92,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         auth = FirebaseAuth.getInstance();
         // Set up the login form.
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if(sharedPref.contains("firebasekey")) {
+            String userID = sharedPref.getString("firebasekey", "");
+            String user = auth.getCurrentUser().getUid();
+            if(user.equals((userID)))
+                getToFindADateMode(null);
+        }
+
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         emailError = findViewById(R.id.email);
         populateAutoComplete();
@@ -121,7 +132,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             @Override
             public void onClick(View v)
             {
-
                 // Start new user activity
                 Intent intent = new Intent(context, NewUserActivity.class);
                 startActivity(intent);
@@ -213,8 +223,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            if(auth.getCurrentUser().isEmailVerified())
-                            {
+                            //if(auth.getCurrentUser().isEmailVerified())
+                            //{
 
                               // Show a progress spinner, and kick off a background task to
                               // perform the user login attempt.
@@ -222,13 +232,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                               mAuthTask = new UserLoginTask(email, password);
                               mAuthTask.execute((Void) null);
                               // Send to find a date mode
+
+                                        FirebaseUser firebaseUser = auth.getCurrentUser();
+                                        if (firebaseUser != null) {
+                                            String userId = firebaseUser.getUid();
+                                            String userEmail = firebaseUser.getEmail();
+
+                                            SharedPreferences.Editor editor = sharedPref.edit();
+                                            editor.putString("firebasekey", userId);
+                                            editor.commit();
+                                        }
+
                               getToFindADateMode(null);
-                            }
-                            else
-                            {
-                                emailError.setError("Your email has not been verified");
-                                return;
-                            }
+                            //}
+                            //else
+                            //{
+                              //  emailError.setError("Your email has not been verified");
+                                //return;
+                            //}
                         } else {
                             // If sign in fails, display a message to the user.
                             emailError.setError("Could not authenticate Email or Password");
