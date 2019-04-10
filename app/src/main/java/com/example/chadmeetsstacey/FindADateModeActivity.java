@@ -35,6 +35,7 @@ public class FindADateModeActivity extends AppCompatActivity {
     private LinearLayout cardHolder;
     private Context context;
     private LayoutParams layoutparams;
+    private int prevCardViewId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -137,6 +138,7 @@ public class FindADateModeActivity extends AppCompatActivity {
         cardHolder = (LinearLayout) findViewById(R.id.my_events_wrapper);
         // Avoid duplicating events on addition of new event
         cardHolder.removeAllViews();
+        prevCardViewId = 0;
 
         // Access a Cloud Firestore instance
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -147,57 +149,11 @@ public class FindADateModeActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    int prevCardViewId = 0;
                     for (final QueryDocumentSnapshot document : task.getResult()) {
                         Log.d(TAG, document.getId() + " => " + document.getData());
                         // Create card with text view and edit button for each of user's events
-                        CardView card = new CardView(context);
-                        int curCardViewId = prevCardViewId + 1;
-                        card.setId(curCardViewId);
-                        card.setLayoutParams(layoutparams);
-                        card.setRadius(15);
-                        card.setUseCompatPadding(true); // Want padding between cards
-                        card.setPadding(25, 25, 25, 25);
-                        card.setCardBackgroundColor(Color.WHITE);
-
-                        // Create text to go in card
-                        TextView text = new TextView(context);
-                        int numMatchObjects = ((List<String>) document.get("potentialMatches")).size();
-                        text.setText(document.get("eventName") + "\n"+ numMatchObjects + " matches");
-                        text.setMaxLines(2);
-                        text.setLayoutParams(layoutparams);
-                        text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
-                        text.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
-                        text.setPadding(25,25,25,25);
-                        text.setGravity(Gravity.CENTER);
-
-                        // Create edit button to go in card
-                        ImageView editButton = new ImageView(context);
-                        LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(150,150);
-                        editButton.setLayoutParams(imageParams);
-                        editButton.setImageResource(R.drawable.edit_icon);
-                        editButton.setClickable(true);
-
-                        // Pass event ID into edit activity when edit button clicked
-                        editButton.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(context, EditEventActivity.class);
-                                intent.putExtra("CurrentEvent", document.getId());
-                                startActivity(intent);
-                            }
-                        });
-
-                        // Create linear layout with text and button
-                        LinearLayout linLay = new LinearLayout(context);
-                        linLay.setOrientation(LinearLayout.HORIZONTAL);
-                        linLay.addView(text);
-                        linLay.addView(editButton);
-                        card.addView(linLay);
-
-                        // Add card to layout
-                        cardHolder.addView(card);
-                        prevCardViewId = curCardViewId;
+                        UserEvent event = document.toObject(UserEvent.class);
+                        addOneEvent(event.getEventName(), document.getId(), event.getPotentialMatches().size());
                     }
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());
@@ -205,6 +161,58 @@ public class FindADateModeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // Creates card for one event and adds it to layout
+    private void addOneEvent(String eventName, final String eventID, int numMatches) {
+        // Create card with text view and edit button for each of user's events
+        CardView card = new CardView(context);
+        int curCardViewId = prevCardViewId + 1;
+        card.setId(curCardViewId);
+        card.setLayoutParams(layoutparams);
+        card.setRadius(15);
+        card.setUseCompatPadding(true); // Want padding between cards
+        card.setPadding(25, 25, 25, 25);
+        card.setCardBackgroundColor(Color.WHITE);
+
+        // Create text to go in card
+        TextView text = new TextView(context);
+        int numMatchObjects = numMatches;
+        text.setText(eventName + "\n"+ numMatchObjects + " matches");
+        text.setMaxLines(2);
+        text.setLayoutParams(layoutparams);
+        text.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 25);
+        text.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+        text.setPadding(25,25,25,25);
+        text.setGravity(Gravity.CENTER);
+
+        // Create edit button to go in card
+        ImageView editButton = new ImageView(context);
+        LinearLayout.LayoutParams imageParams = new LinearLayout.LayoutParams(150,150);
+        editButton.setLayoutParams(imageParams);
+        editButton.setImageResource(R.drawable.edit_icon);
+        editButton.setClickable(true);
+
+        // Pass event ID into edit activity when edit button clicked
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, EditEventActivity.class);
+                intent.putExtra("CurrentEvent", eventID);
+                startActivity(intent);
+            }
+        });
+
+        // Create linear layout with text and button
+        LinearLayout linLay = new LinearLayout(context);
+        linLay.setOrientation(LinearLayout.HORIZONTAL);
+        linLay.addView(text);
+        linLay.addView(editButton);
+        card.addView(linLay);
+
+        // Add card to layout
+        cardHolder.addView(card);
+        prevCardViewId = curCardViewId;
     }
 
 }
