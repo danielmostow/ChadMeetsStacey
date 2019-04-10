@@ -21,9 +21,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -41,6 +43,8 @@ public class EditEventActivity extends AppCompatActivity {
     private List<EditText> allFields;
     private Button submitButton;
     private Button deleteButton;
+    private String currUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private final String filename = currUser + "myEvents.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,6 +150,8 @@ public class EditEventActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Log.d(TAG, "DocumentSnapshot successfully updated!");
+                        // Delete cache because it will be inaccurate
+                        new File(getApplicationContext().getCacheDir(), filename).delete();
                         finish();
                         Toast.makeText(getApplicationContext(), eventName.getText().toString() + " updated!", Toast.LENGTH_LONG).show();
 
@@ -157,8 +163,6 @@ public class EditEventActivity extends AppCompatActivity {
                         Log.w(TAG, "Error writing document", e);
                     }
                 });
-        finish();
-        Toast.makeText(getApplicationContext(), eventName.getText().toString() + " updated!", Toast.LENGTH_LONG).show();
 
     }
 
@@ -179,6 +183,8 @@ public class EditEventActivity extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                        // Delete cache because it will be inaccurate
+                                        new File(getApplicationContext().getCacheDir(), filename).delete();
                                         finish();
                                         Toast.makeText(getApplicationContext(), eventName.getText().toString() + " deleted!", Toast.LENGTH_LONG).show();
 

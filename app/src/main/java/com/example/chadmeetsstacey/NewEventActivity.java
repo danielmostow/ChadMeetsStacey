@@ -3,6 +3,7 @@ package com.example.chadmeetsstacey;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -26,6 +27,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -40,7 +44,8 @@ public class NewEventActivity extends AppCompatActivity {
     private EditText location;
     private EditText description;
     private List<EditText> allFields;
-
+    private String currUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private final String filename = currUser + "myEvents.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate() method called!");
@@ -109,7 +114,7 @@ public class NewEventActivity extends AppCompatActivity {
         }
 
         // Create new event and add to event collection
-        UserEvent event = new UserEvent(eventName.getText().toString(),
+        final UserEvent event = new UserEvent(eventName.getText().toString(),
                 date.getText().toString(), time.getText().toString(),
                 description.getText().toString(), location.getText().toString());
 
@@ -119,6 +124,21 @@ public class NewEventActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                        // Add event to cache
+                        try {
+                            File myEventsCache = new File(getApplicationContext().getCacheDir(), filename);
+                            BufferedWriter writer = new BufferedWriter(new FileWriter(myEventsCache.getAbsoluteFile(), true));
+                            writer.write(documentReference.getId());
+                            writer.newLine();
+                            writer.write(event.getEventName());
+                            writer.newLine();
+                            writer.write(event.getPotentialMatches().size() + "");
+                            writer.newLine();
+                            writer.close();
+                        } catch (Exception e) {
+                            Log.d(TAG, "Cache not available!");
+                        }
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -127,8 +147,16 @@ public class NewEventActivity extends AppCompatActivity {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
-        finish();
-        Toast.makeText(getApplicationContext(), eventName.getText().toString() + " created!", Toast.LENGTH_LONG).show();
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // DELAY SO DATA CAN BE WRITTEN TO CACHE
+                finish();
+                Toast.makeText(getApplicationContext(), eventName.getText().toString() + " created!", Toast.LENGTH_LONG).show();
+            }
+        }, 500);
+
     }
 
     // Returns whether or not data has been entered in each field

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.ScaleDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -175,6 +176,7 @@ public class FindADateModeActivity extends AppCompatActivity {
                     Log.d(TAG, numMatches + "");
                     addOneEvent(eventID, eventName, Integer.parseInt(numMatches));
                 }
+                sc.close();
             } catch (FileNotFoundException e) {
                 useFirebaseData = true;
             }
