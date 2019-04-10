@@ -28,7 +28,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 public class FindADateModeActivity extends AppCompatActivity {
     private static final String TAG = "FindADateModeActivity";
@@ -36,6 +42,8 @@ public class FindADateModeActivity extends AppCompatActivity {
     private Context context;
     private LayoutParams layoutparams;
     private int prevCardViewId;
+    private String currUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    private final String filename = currUser + "myEvents.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +83,12 @@ public class FindADateModeActivity extends AppCompatActivity {
                 goToMatches();
             }
         });
+
+        // Cache file should be recreated periodically
+        // TODO: delete cache file using timestamp
+        context = getApplicationContext();
+        new File(context.getCacheDir(), filename).delete();
+
     }
 
     @Override
@@ -83,7 +97,6 @@ public class FindADateModeActivity extends AppCompatActivity {
         Log.d(TAG, "onResume() method called!");
 
         // Add all of user's events to card view
-        context = getApplicationContext();
         layoutparams = new LayoutParams(
                 LayoutParams.WRAP_CONTENT,
                 LayoutParams.WRAP_CONTENT
@@ -144,27 +157,82 @@ public class FindADateModeActivity extends AppCompatActivity {
         final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         // Get all of user's events
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        db.collection("events").whereEqualTo("creatingUser", user.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (final QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d(TAG, document.getId() + " => " + document.getData());
-                        // Create card with text view and edit button for each of user's events
-                        UserEvent event = document.toObject(UserEvent.class);
-                        addOneEvent(event.getEventName(), document.getId(), event.getPotentialMatches().size());
-                    }
-                } else {
-                    Log.d(TAG, "Error getting documents: ", task.getException());
+        boolean useFirebaseData = true;
+        File myEventsCache = new File(context.getCacheDir(), filename);
+        if (myEventsCache.exists()) {
+            // Use events in cache if cache exists
+            try {
+                Scanner sc = new Scanner(myEventsCache);
+                useFirebaseData = false;
+                Log.d(TAG, "Reading from cache!");
+                while (sc.hasNext()) {
+                    // File has format of event ID, event name, number of matches
+                    String eventID = sc.nextLine();
+                    String eventName = sc.nextLine();
+                    String numMatches = sc.nextLine();
+                    Log.d(TAG, eventID);
+                    Log.d(TAG, eventName);
+                    Log.d(TAG, numMatches + "");
+                    addOneEvent(eventID, eventName, Integer.parseInt(numMatches));
                 }
+            } catch (FileNotFoundException e) {
+                useFirebaseData = true;
             }
-        });
+
+        }
+        if (useFirebaseData){
+            // Load events from Firebase
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            db.collection("events").whereEqualTo("creatingUser", user.getEmail()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        // Create cache file
+                        BufferedWriter writer = null;
+                        boolean canCache = false;
+                        try {
+                            File myEventsCache = new File(context.getCacheDir(), filename);
+                            writer = new BufferedWriter(new FileWriter(myEventsCache.getAbsoluteFile()));
+                            canCache = true;
+                        } catch (Exception e) {
+                            Log.d(TAG, "Cache not available!");
+                        }
+                        for (final QueryDocumentSnapshot document : task.getResult()) {
+                            Log.d(TAG, document.getId() + " => " + document.getData());
+                            // Create card with text view and edit button for each of user's events
+                            UserEvent event = document.toObject(UserEvent.class);
+                            addOneEvent(document.getId(), event.getEventName(), event.getPotentialMatches().size());
+                            // Add each event to cached file to be used in future
+                            if (canCache) {
+                                try {
+                                    Log.d(TAG, "Writing to cache!");
+                                    writer.write(document.getId());
+                                    writer.newLine();
+                                    writer.write(event.getEventName());
+                                    writer.newLine();
+                                    writer.write(event.getPotentialMatches().size() + "");
+                                    writer.newLine();
+                                } catch (Exception e) {
+                                    Log.d(TAG, "Couldn't write to cache!");
+                                }
+                            }
+                        }
+                        try {
+                            writer.close();
+                        } catch (Exception e) {
+                            Log.d(TAG, "Couldn't close cache!");
+                        }
+                    } else {
+                        Log.d(TAG, "Error getting documents: ", task.getException());
+                    }
+                }
+            });
+        }
 
     }
 
     // Creates card for one event and adds it to layout
-    private void addOneEvent(String eventName, final String eventID, int numMatches) {
+    private void addOneEvent(final String eventID, final String eventName, int numMatches) {
         // Create card with text view and edit button for each of user's events
         CardView card = new CardView(context);
         int curCardViewId = prevCardViewId + 1;
