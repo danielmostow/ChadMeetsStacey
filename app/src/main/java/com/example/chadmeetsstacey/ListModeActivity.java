@@ -103,6 +103,7 @@ public class ListModeActivity extends AppCompatActivity {
                                 db.collection("users").document(eventEmail).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        Log.d(TAG, event.getId());
                                         UserInfo creatingUser = documentSnapshot.toObject(UserInfo.class);
                                         UserEvent userEvent = event.toObject(UserEvent.class);
                                         // Add event if preferred gender matches creating user's gender and user hasn't swiped on event
