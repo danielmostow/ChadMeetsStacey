@@ -141,11 +141,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mProgressView = findViewById(R.id.login_progress);
     }
 
-    public void getToFindADateMode(View view) {
+    private void getToFindADateMode(View view) {
         Intent intent = new Intent(this, FindADateModeActivity.class);
         startActivity(intent);
     }
-    public void getToForgotPasswordMode(View view) {
+    private void getToForgotPasswordMode(View view) {
         Intent intent = new Intent(this, ForgotPasswordActivity.class);
         startActivity(intent);
     }
@@ -223,8 +223,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            //if(auth.getCurrentUser().isEmailVerified())
-                            //{
+                            if(auth.getCurrentUser().isEmailVerified())
+                            {
 
                               // Show a progress spinner, and kick off a background task to
                               // perform the user login attempt.
@@ -244,12 +244,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                         }
 
                               getToFindADateMode(null);
-                            //}
-                            //else
-                            //{
-                              //  emailError.setError("Your email has not been verified");
-                                //return;
-                            //}
+                            }
+                            else
+                            {
+                                emailError.setError("Your email has not been verified");
+                                return;
+                            }
                         } else {
                             // If sign in fails, display a message to the user.
                             emailError.setError("Could not authenticate Email or Password");
