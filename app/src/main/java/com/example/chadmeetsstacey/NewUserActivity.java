@@ -104,7 +104,7 @@ public class NewUserActivity extends AppCompatActivity {
     }
 
     // Attempts to register a new user
-    private void attemptToRegister() {
+    public void attemptToRegister() {
         // TODO: Convert to age, grade, and greek org spinners
         // TODO: Save information if user hits back button
 
@@ -116,14 +116,14 @@ public class NewUserActivity extends AppCompatActivity {
 
         // Ensure password = password confirmation and password is valid
         if (password.getText().toString().equals(confirmPassword.getText().toString()) && isValidPassword(password.getText().toString())) {
-            auth.createUserWithEmailAndPassword(
-                    email.getText().toString().trim(),password.getText().toString().trim())
-                    .addOnCompleteListener(NewUserActivity.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(NewUserActivity.this, email.getText().toString() + " registered!", Toast.LENGTH_SHORT).show();
-                                auth.getCurrentUser().sendEmailVerification();
+            //auth.createUserWithEmailAndPassword(
+            //        email.getText().toString().trim(),password.getText().toString().trim())
+            //        .addOnCompleteListener(NewUserActivity.this, new OnCompleteListener<AuthResult>() {
+            //            @Override
+            //            public void onComplete(@NonNull Task<AuthResult> task) {
+            //                if (task.isSuccessful()) {
+            //                    Toast.makeText(NewUserActivity.this, email.getText().toString() + " registered!", Toast.LENGTH_SHORT).show();
+            //                    auth.getCurrentUser().sendEmailVerification();
 
                                 // Create document in User collection for new user
                                 UserInfo user = new UserInfo(email.getText().toString(),
@@ -142,12 +142,12 @@ public class NewUserActivity extends AppCompatActivity {
                                 Settings settings = new Settings(email.getText().toString(), preferredGender);
                                 db.collection("settings").document(email.getText().toString()).set(settings);
                                 finish();
-                            } else {
-                                Log.d(TAG, "User could not be created");
-                                Toast.makeText(NewUserActivity.this, "User could not be created!", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+             //               } else {
+             //                   Log.d(TAG, "User could not be created");
+             //                   Toast.makeText(NewUserActivity.this, "User could not be created!", Toast.LENGTH_LONG).show();
+             //               }
+             //           }
+             //       });
         } else if (!password.getText().toString().equals(confirmPassword.getText().toString())) {
             Toast.makeText(NewUserActivity.this, "Passwords do not match!", Toast.LENGTH_LONG).show();
         } else {
