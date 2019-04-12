@@ -32,10 +32,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.*;
 
 @RunWith(AndroidJUnit4.class)
 public class NewUserActivityTest {
-private String emailWorks = "dumbelite100@gmail.com";
-private String passWorks = "QWERTY1234";
-private String emailFail1 = "dmbelite100@gmail.com";
-private String passFail1 = "qwerty1234";
 private NewUserActivity mNewUserActivity;
 private FirebaseFirestore db;
 

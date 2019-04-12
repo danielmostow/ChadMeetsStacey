@@ -44,8 +44,8 @@ public class NewEventActivity extends AppCompatActivity {
     private EditText location;
     private EditText description;
     private List<EditText> allFields;
-    private String currUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-    private final String filename = currUser + "myEvents.txt";
+    //private String currUser = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+    //private final String filename = currUser + "myEvents.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate() method called!");
@@ -57,15 +57,15 @@ public class NewEventActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         // Get user information for log
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Log.d(TAG, user.getEmail());
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        Log.d(TAG, user.getEmail());
 
         // Set up each text field
         eventName = (EditText) findViewById(R.id.event_name_text);
         date = (EditText) findViewById(R.id.date_text);
-        date.setInputType(InputType.TYPE_NULL);
+//        date.setInputType(InputType.TYPE_NULL);
         time = (EditText) findViewById(R.id.time_text);
-        time.setInputType(InputType.TYPE_NULL);
+//        time.setInputType(InputType.TYPE_NULL);
         location = (EditText) findViewById(R.id.location_text);
         description = (EditText) findViewById(R.id.description_text);
 
@@ -106,7 +106,7 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
     // Attempts to create a new event
-    private void attemptToCreateEvent() {
+    public void attemptToCreateEvent() {
         // If not all fields are valid, don't let user create event
         if (!checkValidation()) {
             Toast.makeText(NewEventActivity.this, "Cannot create event with blank fields!", Toast.LENGTH_LONG).show();
@@ -119,8 +119,8 @@ public class NewEventActivity extends AppCompatActivity {
                 description.getText().toString(), location.getText().toString());
 
         db.collection("events")
-                .add(event)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                .document("testEvent").set(event)
+                /*.addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
@@ -140,7 +140,7 @@ public class NewEventActivity extends AppCompatActivity {
                         }
 
                     }
-                })
+                })*/
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {

@@ -29,7 +29,7 @@ public class UserEvent {
         // Use to get user info
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        creatingUser = user.getEmail();
+        //creatingUser = user.getEmail();
         greekOrg = null;    //TODO: Change when greek org functionality is added
         eventName = en;
         date = d;
