@@ -105,7 +105,7 @@ public class NewEventActivity extends AppCompatActivity {
         });
     }
 
-    // Attempts to create a new event
+    // Attempts to create new event
     private void attemptToCreateEvent() {
         // If not all fields are valid, don't let user create event
         if (!checkValidation()) {
