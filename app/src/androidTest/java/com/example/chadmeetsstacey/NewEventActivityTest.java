@@ -172,7 +172,7 @@ private FirebaseFirestore db;
         onView(withId(R.id.location_text))
                 .perform(typeText("Bulls")).perform(closeSoftKeyboard());
 
-        // Simulate register button click
+        // Simulate register button clicks
         onView(withId(R.id.submit_button)).perform(click());
 
         // Assert that new event was not created properly
